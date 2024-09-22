@@ -1,35 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import '../controllers/login_controller.dart';
 import '../widgets/Button.dart';
 import '../widgets/TextField.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  final String _correctUsername = 'allam';
-  final String _correctPassword = 'allam';
-
-  Future<void> _login() async {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-
-    if (username == _correctUsername && password == _correctPassword) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      Get.offNamed('/home');
-    } else {
-      Get.snackbar(
-        'Login Gagal',
-        'Username atau password is salah',
-        backgroundColor: Color(0xFFFF204E),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-      );
-    }
-  }
+  final LoginController _controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -75,22 +51,21 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 30),
                       CustomTextField(
-                        controller: _usernameController,
+                        controller: _controller.usernameController,
                         labelText: 'Username',
                         backgroundColor: Color(0xFFA0153E),
                       ),
                       SizedBox(height: 20),
                       CustomTextField(
-                        controller: _passwordController,
+                        controller: _controller.passwordController,
                         labelText: 'Password',
                         isPassword: true,
                         backgroundColor: Color(0xFFA0153E),
                       ),
                       SizedBox(height: 40),
-
                       CustomButton(
                         text: 'Login',
-                        onPressed: _login,
+                        onPressed: _controller.login,
                         backgroundColor: Color(0xFFA0153E),
                         width: 200, // Mengatur lebar tombol
                         height: 37, // Mengatur tinggi tombol

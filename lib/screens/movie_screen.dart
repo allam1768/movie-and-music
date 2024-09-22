@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../widgets/Button.dart';
 import '../widgets/MovieCard.dart';
+import '../controllers/movie_controller.dart'; // Pastikan jalur impor benar
 
 class MovieScreen extends StatelessWidget {
-  const MovieScreen({Key? key}) : super(key: key);
+  MovieScreen({Key? key}) : super(key: key);
+
+  final MovieController _controller = Get.put(MovieController()); // Inisialisasi Controller
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +79,8 @@ class MovieScreen extends StatelessWidget {
                                           text: 'Watch now',
                                           onPressed: () {
                                             // Tambahkan logika saat tombol ditekan
+                                            // Contoh menggunakan navigasi dengan GetX:
+                                            Get.toNamed('/movieDetail'); // Contoh navigasi ke detail film
                                           },
                                           backgroundColor: Color(0xFFA0153E),
                                           width: 200, // Mengatur lebar tombol
@@ -85,15 +91,17 @@ class MovieScreen extends StatelessWidget {
                                         CustomButton(
                                           text: '',
                                           onPressed: () {
-                                            // Tambahkan logika saat tombol ditekan
+                                            _controller.toggleFavorite(); // Mengubah status favorit
                                           },
                                           backgroundColor: Color(0xFFA0153E),
-                                          image: Image.asset(
-                                            'assets/images/fav.png',
+                                          image: Obx(() => Image.asset(
+                                            _controller.isFavorite.value
+                                                ? 'assets/images/fav_filled.png' // Gambar favorit penuh
+                                                : 'assets/images/fav.png', // Gambar favorit kosong
                                             width: 37,
                                             height: 37,
                                             fit: BoxFit.cover,
-                                          ),
+                                          )),
                                           width: 37, // Mengatur lebar tombol
                                           height: 37, // Mengatur tinggi tombol
                                         ),
@@ -107,7 +115,6 @@ class MovieScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 10), // Jarak antara gambar dan teks
                     const Text(
                       "For you",
@@ -117,7 +124,6 @@ class MovieScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-
                     // Daftar film dalam grid
                     GridView.count(
                       crossAxisCount: 3, // Membuat 3 kolom

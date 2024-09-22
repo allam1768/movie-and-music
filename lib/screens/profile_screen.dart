@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../controllers/profile_controller.dart';
+
 
 class ProfileScreen extends StatelessWidget {
-  Future<void> _logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('isLoggedIn'); // Hapus status login
-    Get.offNamed('/login'); // Navigasi ke layar login
-  }
+  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +23,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 40), // Jarak antara teks dan tombol
             ElevatedButton(
-              onPressed: _logout,
+              onPressed: () => profileController.logout(), // Panggil logout dari controller
               child: Text('Logout'),
-
             ),
           ],
         ),
