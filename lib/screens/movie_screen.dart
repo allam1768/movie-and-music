@@ -90,20 +90,15 @@ class MovieScreen extends StatelessWidget {
                                         const SizedBox(width: 8),
                                         CustomButton(
                                           text: '',
-                                          onPressed: () {
-                                            _controller.toggleFavorite(); // Mengubah status favorit
-                                          },
-                                          backgroundColor: Color(0xFFA0153E),
-                                          image: Obx(() => Image.asset(
-                                            _controller.isFavorite.value
-                                                ? 'assets/images/fav_filled.png' // Gambar favorit penuh
-                                                : 'assets/images/fav.png', // Gambar favorit kosong
+                                          onPressed: () {},
+                                          backgroundColor: const Color(0xFFA0153E),
+                                          image: Image.asset(
+                                            'assets/images/fav.png',
                                             width: 37,
                                             height: 37,
                                             fit: BoxFit.cover,
-                                          )),
-                                          width: 37, // Mengatur lebar tombol
-                                          height: 37, // Mengatur tinggi tombol
+                                          ),
+
                                         ),
                                       ],
                                     ),
